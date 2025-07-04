@@ -32,7 +32,9 @@ $$
 
 ### 1.3 Algoritmo de aprendizaje (regla del perceptrón)  
 
-1. **Inicializar** pesos $w_i$ y umbral $U$ (normalmente aleatorios).  
+1. **Inicializar** pesos $w_i$ y umbral $U$ (normalmente aleatorios). 
+    * $w_i$ --> [-0.5, 5]
+    * $U$ --> [0, 1]
 2. Para cada ejemplo $(\mathbf{x},s)$:
      
    * Calcular la salida $y$.  
