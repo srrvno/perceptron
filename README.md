@@ -34,13 +34,13 @@ $$
    * $U\sim[0,1]$
 2. Para cada ejemplo $(\mathbf{x},s)$ (etiqueta $s\in{0,1}$):
 
-   1. Calcular $a=\sum w\_i x\_i-U$ y $y=\sigma(a)$.
+   1. Calcular $a=\sum w_i x_i-U$ y $y=\sigma(a)$.
    2. **Error suave**: $\delta = y-s$.
    3. **Actualizar** parámetros (descenso de gradiente de la log‑loss):
 
 $$
 \begin{aligned}
- w_i &\leftarrow w_i - \alpha\,\delta\,x_i\\[4pt]
+ w_i &\leftarrow w_i - \alpha\delta x_i \\[4pt]
  U   &\leftarrow U   + \alpha\,\delta
 \end{aligned}
 $$
