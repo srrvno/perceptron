@@ -2,94 +2,98 @@
 
 ## 1. Perceptrón simple
 
-### 1.1 Origen e idea básica  
-* Una única neurona artificial para aprendizaje supervisado, propuesta originalmente por **Frank Rosenblatt (1957)** como clasificador binario para reconocimiento de patrones en imágenes 2-D.   
-* Se comporta como **clasificador lineal**: la activación de la neurona decide entre dos clases. 
+### 1.1 Origen e idea básica
 
-### 1.2 Estructura matemática  
-Cada neurona está definida por: entradas $x_i$, pesos $w_i$, un **umbral** $U$ y una función de activación $f(\,\cdot\,)$.  
+* Una única neurona artificial para aprendizaje supervisado, propuesta originalmente por **Frank Rosenblatt (1957)** como clasificador binario.
+* Se comporta como **clasificador lineal**: una suma ponderada decide entre dos clases.
 
-$$
-a=\sum_{i=1}^{n} w_i\,x_i - U
-$$
+### 1.2 Estructura matemática
 
-$$
-y=f(a)
-$$
+Cada neurona está definida por: entradas $x_i$, pesos $w_i$, un **umbral** $U$ y una función de activación $f(\cdot)$.
 
-La figura original ilustra el modelo:  
-<img src="docs/images/image.png" alt="alt text" width="300" />
-
-Si $f$ es la función escalón:
+<div style="text-align:center;">
+  <img src="docs/images/image.png" alt="perceptron" width="400" />
+</div>
 
 $$
-f(a)=
-  \begin{cases}
-    1 & \text{si } a\ge 0\\
-    0 & \text{si } a<0
-  \end{cases}
+a = \sum_{i=1}^{n} w_i\,x_i - U
 $$
 
-### 1.3 Algoritmo de aprendizaje (regla del perceptrón)  
+La salida continua (probabilidad) se obtiene con la **sigmoide**:
 
-1. **Inicializar** pesos $w_i$ y umbral $U$ (normalmente aleatorios). 
-    * $w_i$ --> [-0.5, 5]
-    * $U$ --> [0, 1]
-2. Para cada ejemplo $(\mathbf{x},s)$:
-     
-   * Calcular la salida $y$.  
-  
-   * Si $y\neq s$, **actualizar**:  
-     $$
-     w_i \leftarrow w_i + \alpha\,(s - y)\,x_i,\qquad  
-     U \leftarrow U - \alpha\,(s - y)
-     $$
+$$
+y = f(a) = \sigma(a) = \frac{1}{1+e^{-a}}
+$$
 
-3. Repetir hasta que el error sea aceptable o se alcance el criterio de parada.   
 
-### 1.4 Separabilidad lineal  
-El valor de entrada $a$ define un **hiperplano** que separa ambas clases en $\mathbb{R}^n$. Ejemplo con la función lógica **AND** (linealmente separable):  
+### 1.3 Algoritmo de aprendizaje  (sigmoide + log‑loss)
 
-<img src="docs/images/image-3.png" alt="alt text" width="200" />
+1. **Inicializar** pesos y umbral.
 
-Para problemas **no linealmente separables** (p.ej. XOR) el perceptrón simple **no converge**:  
+   * $w_i\sim[-0.5,0.5]$
+   * $U\sim[0,1]$
+2. Para cada ejemplo $(\mathbf{x},s)$ (etiqueta $s\in{0,1}$):
 
-<img src="docs/images/image-4.png" alt="alt text" width="200" />
+   1. Calcular $a=\sum w\_i x\_i-U$ y $y=\sigma(a)$.
+   2. **Error suave**: $\delta = y-s$.
+   3. **Actualizar** parámetros (descenso de gradiente de la log‑loss):
+
+$$
+\begin{aligned}
+ w_i &\leftarrow w_i - \alpha\,\delta\,x_i\\[4pt]
+ U   &\leftarrow U   + \alpha\,\delta
+\end{aligned}
+$$
+
+3. Repetir durante varias épocas hasta que la pérdida media se estabilice.
+
+### 1.4 Inferencia
+
+1. Calcular $a$ y $y=\sigma(a)$ sobre datos de test.
+2. **Umbralizar** (decisión):
+   $(y\ge0.5)\Rightarrow1$; 
+
+   $(y<0.5)\Rightarrow0$.
+
+---
 
 ## 2. Perceptrón multicapa (MLP)
 
-### 2.1 Motivación  
-Añadir capas intermedias («ocultas») permite aprender funciones **no lineales**, superando la limitación del perceptrón simple. 
+### 2.1 Motivación
 
-### 2.2 Arquitectura  
-* Varias capas totalmente conectadas; la información **siempre se propaga hacia delante**.  
-* La última capa suele contener una neurona por clase (clasificación multiclase).  
+Capas ocultas permiten aprender fronteras **no lineales**.
 
-<img src="docs/images/image-5.png" alt="alt text" width="500" />
+### 2.2 Arquitectura
 
-### 2.3 Aprendizaje por retro-propagación  
-* Tras producir la salida, se calcula el **error** (p. ej. error cuadrático medio $E$).  
-* Se propaga el error de atrás hacia delante, actualizando pesos con **descenso del gradiente**:  
+<img src="docs/images/image-5.png" alt="mlp" width="460" />
 
-$$
-w_{ij} \leftarrow w_{ij} - \alpha\,\frac{\partial E}{\partial w_{ij}}
-$$
+### 2.3 Aprendizaje por retro‑propagación
 
-* Requiere funciones de activación **no lineales y derivables** (sigmoide, ReLU, etc.).  
+Para cada peso $w\_{ij}$:  
 
+$w_{ij} \leftarrow w_{ij} - \alpha\,\frac{\partial E}{\partial w_{ij}}$
 
-## 3. Funciones de activación citadas
-| Tipo | Forma/Propósito |
-|------|-----------------|
-| Lineal | $f(a)=a$ |
-| Umbral (escalón) | decisión binaria |
-| Sigmoide | $f(a)=\dfrac{1}{1+e^{-a}}$ | 
-<img src="docs/images/image-2.png" alt="alt text" width="250" /> |
-| Gaussiana | Selectiva a valores intermedios | 
-<img src="docs/images/image-1.png" alt="alt text" width="250" /> |
+Requiere activaciones derivables (sigmoide, ReLU, tanh…).
 
-## 4. Resumen rápido de fórmulas claves
-* **Agregación:** $a=\sum w_i x_i - U$  
-* **Salida binaria:** $y=f(a)$ (escalón)  
-* **Actualización simple:** $w_i \leftarrow w_i + \alpha(s-y)x_i$, $U \leftarrow U - \alpha(s-y)$  
-* **Gradiente (MLP):** $w \leftarrow w - \alpha\,\nabla E$
+---
+
+## 3. Funciones de activación
+
+| Tipo          | Fórmula                                   | Gráfica                                                         |
+| ------------- | ----------------------------------------- | --------------------------------------------------------------- |
+| **Lineal**    | $f(a)=a$                                | —                                                               |
+| **Sigmoide**  | $\displaystyle f(a)=\frac{1}{1+e^{-a}}$ | <img src="docs/images/image-2.png" alt="sigmoid" width="190" /> |
+| **Gaussiana** | selectiva a valores intermedios           | <img src="docs/images/image-1.png" alt="gauss" width="190" />   |
+| **ReLU**      | $f(a)=\max(0,a)$                        | —                                                               |
+
+---
+
+## 4. Resumen rápido de fórmulas clave
+
+* **Agregación:** $a=\sum w_i x_i - U$
+* **Salida continua:** $y=\sigma(a)$
+* **Error suave:** $\delta = y - s$
+* **Actualización sigmoide/log‑loss:**
+  $w\_i \leftarrow w\_i - \alpha \delta x_i$,  
+  $U \leftarrow U + \alpha\delta$
+* **Gradiente MLP:** $w \leftarrow w - \alpha\nabla E$
