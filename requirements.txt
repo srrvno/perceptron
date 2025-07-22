@@ -1,0 +1,9 @@
+backtrader              
+kagglehub               
+narwhals               
+numpy                   
+pandas                  
+plotly                  
+scikit-learn            
+ta                      
+ipykernel
