@@ -39,7 +39,11 @@ $$
 
 $$
 \begin{aligned}
- w_i &\leftarrow w_i - \alpha\,\delta\,x_i \\[4pt]
+ w_i &\leftarrow w_i - \alpha\,\delta\,x_i
+\end{aligned}
+$$
+$$
+\begin{aligned}
  U   &\leftarrow U   + \alpha\,\delta
 \end{aligned}
 $$
@@ -199,9 +203,9 @@ $$
 
 | Type         | Formula                                   | Graphic                                                         |
 | ------------ | ----------------------------------------- | --------------------------------------------------------------- |
-| **Linear**   | \$f(a)=a\$                                | —                                                               |
-| **Sigmoid**  | \$\displaystyle f(a)=\frac{1}{1+e^{-a}}\$ | <img src="docs/images/image-2.png" alt="sigmoid" width="190" /> |
+| **Linear**   | $f(a)=a$                                | —                                                               |
+| **Sigmoid**  | $\displaystyle f(a)=\frac{1}{1+e^{-a}}$ | <img src="docs/images/image-2.png" alt="sigmoid" width="190" /> |
 | **Gaussian** | selective for intermediate values         | <img src="docs/images/image-1.png" alt="gauss" width="190" />   |
-| **ReLU**     | \$f(a)=\max(0,a)\$                        | —                                                               |
+| **ReLU**     | $f(a)=\max(0,a)$                        | —                                                               |
 
 ---
