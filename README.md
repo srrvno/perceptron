@@ -160,8 +160,8 @@ $$
 
 3. **Local gradients**
 
-   * **Weights:** $\displaystyle \frac{\partial L}{\partial W^{(t)}} = \delta^{(t)}\,{a^{(t-1)}}^{\!\top}$.
-   * **Biases:** $\displaystyle \frac{\partial L}{\partial b^{(t)}} = \delta^{(t)}$.
+   * **Weights:** $\displaystyle \frac{\partial L}{\partial W^{(t)}} = \delta^{(t)}\,{a^{(t-1)}}^{\!\top}$
+   * **Biases:** $\displaystyle \frac{\partial L}{\partial b^{(t)}} = \delta^{(t)}$
 
 4. **Parameter update** (e.g. SGD)
 
